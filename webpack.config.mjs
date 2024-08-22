@@ -90,7 +90,13 @@ export default env => {
        * in their `package.json` might not work correctly.
        */
       ...Repack.getResolveOptions(platform),
-
+      conditionNames: ['default'],
+      // alias: {
+      //   axios: path.join(dirname, 'node_modules/axios/dist/axios.js'),
+      // },
+      // alias: {
+      //   axios: path.join(dirname, 'node_modules/axios/dist/esm/axios.js'),
+      // },
       /**
        * Uncomment this to ensure all `react-native*` imports will resolve to the same React Native
        * dependency. You might need it when using workspaces/monorepos or unconventional project
@@ -152,24 +158,29 @@ export default env => {
       rules: [
         {
           test: /\.[cm]?[jt]sx?$/,
-          include: [
-            /node_modules(.*[/\\])+react-native/,
-            /node_modules(.*[/\\])+@react-native/,
-            /node_modules(.*[/\\])+@react-navigation/,
-            /node_modules(.*[/\\])+@react-native-community/,
-            /node_modules(.*[/\\])+expo/,
-            /node_modules(.*[/\\])+pretty-format/,
-            /node_modules(.*[/\\])+metro/,
-            /node_modules(.*[/\\])+abort-controller/,
-            /node_modules(.*[/\\])+@callstack[/\\]repack/,            
-            /node_modules(.*[/\\])+react-freeze/,
-            // --> para la navegación
-            /node_modules(.*[/\\])+@react-native-masked-view[/\\]masked-view/,
-            /node_modules(.*[/\\])+react-native-gesture-handler/,
-            /node_modules(.*[/\\])+react-native-safe-area-context/,
-            /node_modules(.*[/\\])+react-native-screens/,
-            // <--
-          ],
+          include: /node_modules(?!\/nanoid)/,
+          // include: [
+          //   /node_modules(.*[/\\])+react-native/,
+          //   /node_modules(.*[/\\])+@react-native/,
+          //   /node_modules(.*[/\\])+@react-navigation/,
+          //   /node_modules(.*[/\\])+@react-native-community/,
+          //   /node_modules(.*[/\\])+expo/,
+          //   /node_modules(.*[/\\])+pretty-format/,
+          //   /node_modules(.*[/\\])+metro/,
+          //   /node_modules(.*[/\\])+abort-controller/,
+          //   /node_modules(.*[/\\])+@callstack[/\\]repack/,
+          //   /node_modules(.*[/\\])+react-freeze/,
+          //   // --> para la navegación
+          //   /node_modules(.*[/\\])+@react-native-masked-view[/\\]masked-view/,
+          //   /node_modules(.*[/\\])+react-native-gesture-handler/,
+          //   /node_modules(.*[/\\])+react-native-safe-area-context/,
+          //   /node_modules(.*[/\\])+react-native-screens/,
+          //   // --> para axios
+          //   /node_modules(.*[/\\])+axios/,
+          //   /node_modules(.*[/\\])+follow-redirects/,
+          //   /node_modules(.*[/\\])+form-data/,
+          //   /node_modules(.*[/\\])+proxy-from-env/,
+          // ],
           use: 'babel-loader',
         },
         /**
@@ -192,6 +203,21 @@ export default env => {
             },
           },
         },
+        // {
+        //   test: /\.[jt]sx?$/,
+        //   include: [/node_modules(.*[/\\])+axios\//],
+        //   use: {
+        //     loader: 'babel-loader',
+        //     options: {
+        //       presets: [
+        //         [
+        //           'module:metro-react-native-babel-preset',
+        //           {disableImportExportTransform: true},
+        //         ],
+        //       ],
+        //     },
+        //   },
+        // },
         /**
          * This loader handles all static assets (images, video, audio and others), so that you can
          * use (reference) them inside your application.
@@ -266,6 +292,11 @@ export default env => {
             eager: STANDALONE,
             requiredVersion: '0.74.5',
           },
+          redaxios: {
+            singleton: true,
+            eager: STANDALONE,
+            requiredVersion: '0.5.1',
+          },
           '@react-native-masked-view/masked-view': {
             singleton: true,
             eager: STANDALONE,
@@ -281,10 +312,10 @@ export default env => {
             eager: STANDALONE,
             requiredVersion: '6.1.18',
           },
-          '@react-navigation/stack': {
+          '@react-navigation/native-stack': {
             singleton: true,
             eager: STANDALONE,
-            requiredVersion: '6.4.1',
+            requiredVersion: '6.11.0',
           },
           'react-native-gesture-handler': {
             singleton: true,

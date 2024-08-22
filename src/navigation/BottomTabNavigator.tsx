@@ -2,16 +2,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import CharacterNavigator from './ CharacterNavigator';
 
 const Tab = createBottomTabNavigator();
-
-export const CharactersScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={{fontWeight: 'bold', fontSize: 24}}>Characters Screen</Text>
-    </View>
-  );
-};
 
 export const ApiScreen = () => {
   return (
@@ -46,9 +39,13 @@ const BottomTabNavigator = () => {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Personajes" component={CharactersScreen} />
+      <Tab.Screen
+        name="Personajes"
+        options={{title: 'Character'}}
+        component={CharacterNavigator}
+      />
       <Tab.Screen name="Info" component={InfoScreen} />
-      <Tab.Screen name="Api" component={ApiScreen} />
+      {/* <Tab.Screen name="Api" component={ApiScreen} /> */}
     </Tab.Navigator>
   );
 };

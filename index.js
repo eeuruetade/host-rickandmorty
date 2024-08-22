@@ -10,7 +10,8 @@ import {name as appName} from './app.json';
 import {ScriptManager, Script, Federated} from '@callstack/repack/client';
 
 const containers = {
-  app1: `https://microfrontsrntest.blob.core.windows.net/app1/outputs/${Platform.OS}/remotes/[name][ext]`,
+  characters: `https://microfrontsrntest.blob.core.windows.net/rickmorty1/outputs/${Platform.OS}/remotes/[name][ext]`,
+  // characters: 'http://localhost:9000/[name][ext]',
 };
 
 const resolveURL = Federated.createURLResolver({
@@ -31,7 +32,7 @@ ScriptManager.shared.addResolver(async (scriptId, caller) => {
 
   return {
     url,
-    cache: false, // For development
+    cache: true, // For development
     query: {
       platform: Platform.OS,
     },
