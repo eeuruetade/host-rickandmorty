@@ -1,7 +1,7 @@
+import React, {Suspense, useEffect} from 'react';
 import {Federated} from '@callstack/repack/client';
 import {useNavigation} from '@react-navigation/native';
-import React, {Suspense, useEffect} from 'react';
-import {Text} from 'react-native';
+import {Loading} from './Loading';
 
 const AppCharacters = React.lazy(() =>
   Federated.importModule('characters', './App'),
@@ -17,7 +17,7 @@ export const CharactersScreen = () => {
   }, []);
 
   return (
-    <Suspense fallback={<Text>Loading...</Text>}>
+    <Suspense fallback={<Loading />}>
       <AppCharacters />
     </Suspense>
   );
